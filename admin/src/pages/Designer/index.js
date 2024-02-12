@@ -220,6 +220,7 @@ const EmailDesignerPage = ({ isCore = false }) => {
   const toggleNotification = useNotification();
 
   const saveDesign = async () => {
+	  console.log('saveDesign');
     if (!coreEmailType && !templateData?.templateReferenceId) {
       /*
       FIXME: useNotification cause re-rendering so I temporarly commented all toggleNotification blocks
@@ -320,8 +321,10 @@ const EmailDesignerPage = ({ isCore = false }) => {
   };
 
   const onLoadHandler = useCallback(() => {
+	  console.log('onLoadHandler call before timeout');
     // ⬇︎ workaround to avoid firing onLoad api before setting the editor ref
     setTimeout(() => {
+	    console.log('onLoadHandler after timeout');
       emailEditorRef.current?.editor?.addEventListener('onDesignLoad', onDesignLoad);
       emailEditorRef.current?.editor?.registerCallback('selectImage', onSelectImageHandler);
 
@@ -333,6 +336,7 @@ const EmailDesignerPage = ({ isCore = false }) => {
   const [imageUploadDoneCallback, setImageUploadDoneCallback] = useState(undefined);
 
   const onSelectImageHandler = (data, done) => {
+	  console.log('open media lib');
     setImageUploadDoneCallback(() => done);
     setIsMediaLibraryOpen(true);
   };
@@ -549,12 +553,12 @@ const EmailDesignerPage = ({ isCore = false }) => {
           </TabGroup>
         </>
       </DesignerContainer>
-      {/* <MediaLibrary
+      { <MediaLibrary
         onToggle={handleToggleMediaLibrary}
         isOpen={isMediaLibraryOpen}
         onChange={handleMediaLibraryChange}
         filesToUpload={filesToUpload}
-      /> */}
+      /> }
     </>
   );
 };
